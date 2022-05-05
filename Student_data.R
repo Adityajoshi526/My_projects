@@ -4,14 +4,14 @@ library(dplyr)
 library(corrgram)
 library(corrplot)
 library(caTools)
+df <- read.csv('student-mat.csv',sep = ';')
 num.col <- sapply(df,is.numeric)  
 cor.data <- cor(df[,num.col])
-vis <- corrgram(df,order=T,lower.panel=panel.shade,upper.panel=panel.pie,text.panel=panel.txt)
 pl <- ggplot(df,aes(x=G3))+geom_histogram(bins=20,alpha=0.5,fill='blue')
 
 set.seed(101)
 
-sample <- sample.split(df$G3,SplitRatio = 0.7)
+sample <- sample.split(df$G3, SplitRatio = 0.7)
 
 train <- subset(df,sample == T)
 
@@ -45,3 +45,4 @@ SST <- sum((mean(df$G3)-results$actual)^2)
 
 R2 <- 1 - SSE/SST
 print(R2)
+print(summary(model))
